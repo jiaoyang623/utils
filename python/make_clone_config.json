@@ -1,0 +1,107 @@
+[
+  {
+    "action": "replace",
+    "src": "AndroidManifest.xml",
+    "dst": "AndroidManifest_clone.xml",
+    "replace": [
+      {
+        "from": "package=\"com.qihoo.video\"",
+        "to": "package=\"net.tvfanqie.video\""
+      },
+      {
+        "from": "android:icon=\"@drawable/icon\"",
+        "to": "android:icon=\"@drawable/icon_clone\""
+      },
+      {
+        "from": "android:theme=\"@style/SplashTheme\"",
+        "to": "android:theme=\"@style/SplashTheme_clone\""
+      },
+      {
+        "from": "5225b3cb56240bb0fa00c734",
+        "to": "56c2925e67e58ebd41002939"
+      },
+      {
+        "from": "@string/app_name",
+        "to": "@string/app_name_clone"
+      },
+      {
+        "from": "android:host=\"vapp.360.cn\"",
+        "to": "android:host=\"vapp.tomato.cn\""
+      },
+      {
+        "from": "android:scheme=\"qhvideo\"",
+        "to": "android:scheme=\"qhvideo\""
+      }
+    ],
+    "replace_regex": [
+      {
+        "from": "<provider[\\w\\s:=\".]+com.letv[\\w\\s:=\".]*/>",
+        "to": ""
+      },
+      {
+        "from": "\\s+</application>",
+        "to": "\n<meta-data\n\tandroid:name=\"CLONE_VERSION\"\n\tandroid:value=\"1\" />\n<meta-data\n\tandroid:name=\"CLONE_HOST\"\n\tandroid:value=\"vapp.tomato.cn\" />\n<meta-data\n\tandroid:name=\"CLONE_SCHEME\"\n\tandroid:value=\"qhvideo\" />\n</application>"
+      },
+      {
+        "from": "<activity[\\s\\w:=\"]+com\\.mediav\\.ads\\.sdk[\\s\\w:=\"\\.|]+/>",
+        "to": ""
+      },
+      {
+        "from": "<service[\\s\\w:=\"]+com\\.mediav\\.ads\\.sdk[\\s\\w:=\"\\.>]+</service>",
+        "to": ""
+      }
+    ]
+  },
+  {
+    "action": "replace",
+    "src": "../DroidPlugin/AndroidManifest.xml",
+    "dst": "../DroidPlugin/AndroidManifest.xml",
+    "replace": [
+      {
+        "from": "com.qihoo.video_stub",
+        "to": "net.tvfanqie.video_stub"
+      }
+    ]
+  },
+  {
+    "action": "replace",
+    "src": "../DroidPlugin/src/com/morgoo/droidplugin/pm/PluginManager.java",
+    "dst": "../DroidPlugin/src/com/morgoo/droidplugin/pm/PluginManager.java",
+    "replace": [
+      {
+        "from": "STUB_AUTHORITY_NAME = \"com.qihoo.video_stub\"",
+        "to": "STUB_AUTHORITY_NAME = \"net.tvfanqie.video_stub\""
+      }
+    ]
+  },
+  {
+    "action": "delete",
+    "src": "libs/adsdk_0.1.15.1121.jar"
+  },
+  {
+    "action": "replace",
+    "src": "project.properties",
+    "dst": "project.properties.clone",
+    "replace_regex": [
+      {
+        "from": "^#.*$",
+        "to": ""
+      },
+      {
+        "from": "^.*Letv.*$",
+        "to": ""
+      }
+    ],
+    "replace_group": [
+      {
+        "from": "(android\\.library\\.reference\\.)(\\d+)(\\s*=.+)",
+        "to": [
+          1,
+          "seq",
+          3
+        ]
+      }
+    ]
+  }
+]
+

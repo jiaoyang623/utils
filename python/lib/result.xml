@@ -1,0 +1,1643 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="net.tvfanqie.video"
+    android:installLocation="auto"
+    android:versionCode="90"
+    android:versionName="3.5.20" >
+
+    <uses-sdk
+        android:minSdkVersion="9"
+        android:targetSdkVersion="22" />
+
+    <uses-permission android:name="android.permission.CLEAR_APP_CACHE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.BROADCAST_STICKY" />
+    <uses-permission android:name="android.permission.GET_TASKS" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <!-- 用于修复微博分享的bug，4.4的手机分享返回后回到了首页 -->
+    <uses-permission android:name="android.permission.REORDER_TASKS" />
+
+    <!-- 声明抓log权限（用于用户反馈debug版本） -->
+    <uses-permission android:name="android.permission.READ_LOGS"  />
+
+
+    <!-- 桌面创建快捷方式权限 -->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="com.huaqin.launcherEx.permission.READ_SETTINGS" />
+    <uses-permission android:name="com.huaqin.launcherEx.permission.WRITE_SETTINGS" />
+    <uses-permission android:name="com.android.launcher.permission.INSTALL_SHORTCUT" />
+    <uses-permission android:name="com.android.launcher.permission.UNINSTALL_SHORTCUT" />
+    <uses-permission android:name="com.android.launcher.permission.READ_SETTINGS" />
+    <uses-permission android:name="com.android.launcher.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="com.huawei.launcher3.permission.READ_SETTINGS" />
+    <uses-permission android:name="com.qihoo360.launcher.permission.WRITE_SETTINGS" />
+    <uses-permission android:name="com.qihoo360.launcher.permission.READ_SETTINGS" />
+    <uses-permission android:name="android.permission.KILL_BACKGROUND_PROCESSES" />
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+    <uses-permission android:name="com.htc.launcher.permission.READ_SETTINGS" />
+    <uses-permission android:name="com.htc.launcher.permission.WRITE_SETTINGS" />
+    <!-- Qihoo360应用联盟 增加的权限 -->
+    <uses-permission android:name="android.permission.GET_PACKAGE_SIZE" />
+    <!-- GPS定位权限 -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
+    <!-- SSO模块：下行短信 -->
+    <uses-permission android:name="android.permission.RECEIVE_SMS" />
+    <uses-permission android:name="android.permission.READ_SMS" />
+
+    <!-- SSO模块：上行短信 -->
+    <uses-permission android:name="android.permission.SEND_SMS" />
+
+    <supports-screens
+        android:anyDensity="true"
+        android:largeScreens="true"
+        android:normalScreens="true" />
+
+    <application
+        android:name="com.qihoo.video.application.QihuVideoApplication"
+        android:allowBackup="false"
+        android:icon="@drawable/icon_clone"
+        android:label="@string/app_name_clone"
+        android:theme="@style/AppTheme" >
+        <activity
+            android:name="com.qihoo.video.SplashActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:label="@string/app_name_clone"
+            android:screenOrientation="portrait"
+            android:theme="@style/SplashTheme_clone" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!-- 引导图的版本号，升级或降级时，当引导图 发生变化了，需要强制显示引导图 -->
+        <meta-data
+            android:name="guideVersion"
+            android:value="1" >
+        </meta-data>
+
+        <receiver android:name="com.qihoo.video.broadcastreceiver.TimerReceiver" >
+            <intent-filter>
+                <action android:name="android.intent.action.TIMEZONE_CHANGED" />
+                <action android:name="android.intent.action.TIME_SET" />
+                <action android:name="com.qihoo.video.TIME_PICK" />
+            </intent-filter>
+        </receiver>
+
+        <!-- 测试用的页面 activity -->
+        <activity
+            android:name="com.qihoo.video.FavoritesActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:exported="false"
+            android:label="@string/empty_string"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActivityTheme" >
+            <intent-filter>
+                <data
+                    android:host="vapp.tomato.cn"
+                    android:path="/favorites"
+                    android:scheme="qhvideo" />
+
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.qihoo.video.ReservationActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:exported="false"
+            android:label="@string/empty_string"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActivityTheme" >
+            <intent-filter>
+                <data
+                    android:host="vapp.tomato.cn"
+                    android:path="/reservation"
+                    android:scheme="qhvideo" />
+
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.qihoo.video.SubscribeChannelActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:exported="false"
+            android:label="@string/empty_string"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar" >
+            <intent-filter>
+                <data
+                    android:host="vapp.tomato.cn"
+                    android:path="/subscribechannel"
+                    android:scheme="qhvideo" />
+
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.qihoo.video.SubscribeSelectActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:exported="false"
+            android:label="@string/empty_string"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActivityTheme" >
+            <intent-filter>
+                <data
+                    android:host="vapp.tomato.cn"
+                    android:path="/subscribeselect"
+                    android:scheme="qhvideo" />
+
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <!-- 
+        <activity
+            android:name="com.qihoo.video.MoviePayDetailActivity"
+            android:configChanges="orientation|keyboardHidden|keyboard|screenSize"
+            android:exported="false"
+            android:label="@string/empty_string"
+            android:screenOrientation="portrait" >
+            <intent-filter>
+                <data
+                    android:host="vapp.tomato.cn"
+			        android:path="/moviedetail"
+                    android:scheme="qhvideo" />
+
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+    
+        <activity
+            android:name="com.qihoo.video.MoviePayInfoActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:exported="false"
+            android:label="@string/empty_string"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActivityTheme" >
+        </activity>
+        <activity
+            android:name="com.qihoo.video.StarMovieDetailActivity"
+            android:configChanges="orientation|keyboardHidden|keyboard|screenSize"
+            android:exported="false"
+            android:label="@string/empty_string"
+            android:screenOrientation="portrait" >
+            <intent-filter>
+                <data
+                    android:host="vapp.tomato.cn"
+                    android:path="/moviestar"
+                    android:scheme="qhvideo" />
+
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.qihoo.video.PrivateMovieDetailActivity"
+            android:configChanges="orientation|keyboardHidden|keyboard|screenSize"
+            android:exported="false"
+            android:label="@string/empty_string"
+            android:screenOrientation="portrait" >
+            <intent-filter>
+                <data
+                    android:host="vapp.tomato.cn"
+                    android:path="/moviehost"
+                    android:scheme="qhvideo" />
+
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+      
+        <activity
+            android:name="com.qihoo.video.PurchasedListActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:exported="false"
+            android:label="@string/empty_string"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActivityTheme" >
+            <intent-filter>
+                <data
+                    android:host="vapp.tomato.cn"
+                    android:path="/purchasedlist"
+                    android:scheme="qhvideo" />
+
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.qihoo.video.PayFeedbackActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:exported="false"
+            android:label="@string/empty_string"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActivityTheme"
+            android:windowSoftInputMode="adjustPan" >
+            <intent-filter>
+                <data
+                    android:host="vapp.tomato.cn"
+                    android:path="/payfeedback"
+                    android:scheme="qhvideo" />
+
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.qihoo.video.MovieTicketsExchangeActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:exported="false"
+            android:label="@string/empty_string"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActivityTheme"
+            android:windowSoftInputMode="adjustPan" >
+            <intent-filter>
+                <data
+                    android:host="vapp.tomato.cn"
+                    android:path="/movieticketexchange"
+                    android:scheme="qhvideo" />
+
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+          -->
+        <activity
+            android:name="com.qihoo.video.SubscriptionActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:exported="false"
+            android:label="@string/empty_string"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActivityTheme" >
+            <intent-filter>
+                <data
+                    android:host="vapp.tomato.cn"
+                    android:path="/subscription"
+                    android:scheme="qhvideo" />
+
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.qihoo.video.AlbumDetailActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:exported="false"
+            android:label="@string/empty_string"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActivityTheme" >
+            <intent-filter>
+                <data
+                    android:host="vapp.tomato.cn"
+                    android:path="/albumdetail"
+                    android:scheme="qhvideo" />
+
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.qihoo.video.VideoWebViewActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:label="@string/empty_string"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden|adjustPan" >
+            <intent-filter>
+                <data
+                    android:host="vapp.tomato.cn"
+                    android:path="/videowebview"
+                    android:scheme="qhvideo" />
+
+                <action android:name="com.qihoo.video.videowebviewactivity" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.qihoo.video.WebViewActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:label="@string/empty_string"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden|adjustPan" >
+            <intent-filter>
+                <data
+                    android:host="vapp.tomato.cn"
+                    android:path="/webview"
+                    android:scheme="qhvideo" />
+
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.qihoo.video.AboutActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:exported="false"
+            android:label="@string/empty_string"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActivityTheme" >
+            <intent-filter>
+                <data
+                    android:host="vapp.tomato.cn"
+                    android:path="/about"
+                    android:scheme="qhvideo" />
+
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.qihoo.video.AboutCloneActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:exported="false"
+            android:label="@string/empty_string"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActivityTheme" >
+            <intent-filter>
+                <data
+                    android:host="vapp.tomato.cn"
+                    android:path="/aboutclone"
+                    android:scheme="qhvideo" />
+
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.qihoo.video.DeclareActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:exported="false"
+            android:label="@string/empty_string"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActivityTheme" >
+            <intent-filter>
+                <data
+                    android:host="vapp.tomato.cn"
+                    android:path="/declare"
+                    android:scheme="qhvideo" />
+
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.qihoo.video.VideoWebSiteActivity"
+            android:configChanges="orientation|layoutDirection|keyboard|locale|screenLayout|screenSize"
+            android:hardwareAccelerated="true"
+            android:label="@string/empty_string"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActivityTheme" >
+            <intent-filter>
+                <data
+                    android:host="vapp.tomato.cn"
+                    android:path="/play"
+                    android:scheme="qhvideo" />
+
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.qihoo.video.VideoPlayMiddleActivity"
+            android:configChanges="orientation|layoutDirection|keyboard|locale|screenLayout|screenSize"
+            android:label="@string/empty_string"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActivityTheme" >
+        </activity>
+        <activity
+            android:name="com.qihoo.video.FeedbackActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:exported="false"
+            android:label="@string/empty_string"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActivityTheme"
+            android:windowSoftInputMode="adjustPan" >
+            <intent-filter>
+                <data
+                    android:host="vapp.tomato.cn"
+                    android:path="/feedback"
+                    android:scheme="qhvideo" />
+
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <!-- android:process=":VideoDetailActivity" -->
+        <activity
+            android:name="com.qihoo.video.HistoryActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:exported="false"
+            android:label="@string/empty_string"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActivityTheme" >
+            <intent-filter>
+                <data
+                    android:host="vapp.tomato.cn"
+                    android:path="/history"
+                    android:scheme="qhvideo" />
+
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.qihoo.video.SpecialActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:label="@string/empty_string"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActivityTheme" >
+            <intent-filter>
+                <data
+                    android:host="vapp.tomato.cn"
+                    android:path="/special"
+                    android:scheme="qhvideo" />
+
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.qihoo.video.ChannelTvActivity"
+            android:configChanges="orientation|keyboardHidden|keyboard|screenSize"
+            android:exported="false"
+            android:label="@string/empty_string"
+            android:screenOrientation="portrait" >
+            <intent-filter>
+                <data
+                    android:host="vapp.tomato.cn"
+                    android:path="/channel"
+                    android:scheme="qhvideo" />
+
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.qihoo.video.LiveListActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:exported="false"
+            android:label="@string/empty_string"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActivityTheme" >
+            <intent-filter>
+                <data
+                    android:host="vapp.tomato.cn"
+                    android:path="/livelist"
+                    android:scheme="qhvideo" />
+
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <!-- 新增push服务 -->
+        <service android:name="com.qihoo.video.services.PushVideoService" >
+            <intent-filter>
+                <action android:name="com.qihoo.video.QihooAlliance" />
+                <action android:name="com.qihoo.video.PUSHSERVICE" />
+            </intent-filter>
+        </service>
+        <!-- log记录服务 -->
+        <service android:name="com.qihoo.video.services.LogRecorderService" />
+
+        <!-- 更新Service -->
+        <activity
+            android:name="com.qihoo.video.SearchActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:exported="true"
+            android:label="@string/empty_string"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActivityTheme"
+            android:windowSoftInputMode="adjustPan" >
+            <intent-filter>
+                <data
+                    android:host="vapp.tomato.cn"
+                    android:path="/search"
+                    android:scheme="qhvideo" />
+
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.qihoo.video.FunctionSettingsActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:exported="false"
+            android:label="@string/empty_string"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActivityTheme" >
+            <intent-filter>
+                <data
+                    android:host="vapp.tomato.cn"
+                    android:path="/functionsettings"
+                    android:scheme="qhvideo" />
+
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <!--
+        <activity
+            android:name="com.qihoo.video.MoviePrivateShareAboutActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:exported="false"
+            android:label="@string/empty_string"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActivityTheme" >
+            <intent-filter>
+                <data
+                    android:host="vapp.tomato.cn"
+                    android:path="/movieshareabout"
+                    android:scheme="qhvideo" />
+
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+          -->
+        <activity
+            android:name="com.qihoo.video.QihuVideoMainActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:exported="false"
+            android:label="@string/empty_string"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActivityTheme" >
+            <intent-filter>
+                <action android:name="com.qihoo.video.main" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <!--
+        <service android:name=".services.DownloadService" >
+        </service>
+        -->
+
+        <activity
+            android:name="com.qihoo.video.OffLineActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:exported="true"
+            android:label="@string/empty_string"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActivityTheme" >
+            <intent-filter>
+                <data
+                    android:host="vapp.tomato.cn"
+                    android:path="/offline"
+                    android:scheme="qhvideo" />
+
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.qihoo.video.TVOffLineSelectorActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:exported="true"
+            android:label="@string/empty_string"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActivityTheme" >
+            <intent-filter>
+                <action android:name="com.qihoo.video.tvofflineselectoracivity" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.qihoo.video.VarityShowOffLineSelectorActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:exported="true"
+            android:label="@string/empty_string"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActivityTheme" >
+            <intent-filter>
+                <action android:name="com.qihoo.video.varityshowofflineselectoractivity" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <!-- 友盟打点相关配置（permission要求上方已具备） -->
+        <meta-data
+            android:name="UMENG_APPKEY"
+            android:value="56c2925e67e58ebd41002939" >
+        </meta-data>
+        <meta-data
+            android:name="UMENG_CHANNEL"
+            android:value="360sjzs" />
+        <meta-data
+            android:name="DC_APPKEY"
+            android:value="26657d5ff9020d2abefe558796b99584" />
+        <meta-data
+            android:name="DC_CHANNEL"
+            android:value="360sjzs" />
+
+        <service
+            android:name="com.qihoo.video.services.MagicPocketService"
+            android:enabled="true"
+            android:exported="false" >
+            <intent-filter android:name="com.qihoo.video.services.MagicPocketService" />
+        </service>
+
+        <receiver android:name="com.qihoo.video.broadcastreceiver.MagicPocketStartReceiver" >
+            <intent-filter android:priority="2147483647" >
+                <action android:name="android.intent.action.BOOT_COMPLETED" >
+                </action>
+
+                <category android:name="android.intent.category.HOME" />
+            </intent-filter>
+            <intent-filter android:priority="2147483647" >
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+            </intent-filter>
+            <intent-filter android:priority="2147483647" >
+                <action android:name="android.intent.action.USER_PRESENT" />
+            </intent-filter>
+            <intent-filter android:priority="0x7fffffff" >
+                <action android:name="android.bluetooth.adapter.action.STATE_CHANGED" />
+                <action android:name="android.net.wifi.WIFI_STATE_CHANGED" />
+                <action android:name="android.intent.action.ANY_DATA_STATE" />
+                <action android:name="android.net.wifi.STATE_CHANGE" />
+            </intent-filter>
+            <intent-filter android:priority="0x7fffffff" >
+                <action android:name="android.intent.action.MEDIA_UNMOUNTED" />
+                <action android:name="android.intent.action.MEDIA_REMOVED" />
+                <action android:name="android.intent.action.MEDIA_CHECKING" />
+                <action android:name="android.intent.action.MEDIA_EJECT" />
+
+                <data android:scheme="file" />
+            </intent-filter>
+            <intent-filter android:priority="0x7fffffff" >
+                <action android:name="android.intent.action.SERVICE_STATE" />
+            </intent-filter>
+            <intent-filter android:priority="0x7fffffff" >
+                <action android:name="android.intent.action.SIM_STATE_CHANGED" />
+            </intent-filter>
+        </receiver>
+
+        <activity
+            android:name="com.qihoo.video.VideoDetailPageActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:exported="true"
+            android:label="@string/empty_string"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActivityTheme" >
+            <intent-filter>
+                <data
+                    android:host="vapp.tomato.cn"
+                    android:path="/detailpage"
+                    android:scheme="qhvideo" />
+
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.qihoo.video.MovieDetailActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:exported="true"
+            android:label="@string/empty_string"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActivityTheme" >
+            <intent-filter>
+                <data
+                    android:host="vapp.tomato.cn"
+                    android:path="/moviedetailpage"
+                    android:scheme="qhvideo" />
+
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.qihoo.video.TVDetailActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:exported="true"
+            android:label="@string/empty_string"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActivityTheme" >
+            <intent-filter>
+                <data
+                    android:host="vapp.tomato.cn"
+                    android:path="/tvdetailpage"
+                    android:scheme="qhvideo" />
+
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.qihoo.video.VarietyDetailActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:exported="true"
+            android:label="@string/empty_string"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActivityTheme" >
+            <intent-filter>
+                <data
+                    android:host="vapp.tomato.cn"
+                    android:path="/varietydetailpage"
+                    android:scheme="qhvideo" />
+
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.qihoo.video.LiveDetailPageActivity"
+            android:configChanges="orientation|keyboardHidden|keyboard|screenSize"
+            android:exported="false"
+            android:label="@string/empty_string"
+            android:screenOrientation="portrait" >
+            <intent-filter>
+                <data
+                    android:host="vapp.tomato.cn"
+                    android:path="/livedetail"
+                    android:scheme="qhvideo" />
+
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.qihoo.video.ShortVideoDetailActivity"
+            android:configChanges="orientation|keyboardHidden|keyboard|screenSize"
+            android:exported="false"
+            android:label="@string/empty_string"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" >
+            <intent-filter>
+                <data
+                    android:host="vapp.tomato.cn"
+                    android:path="/shortdetail"
+                    android:scheme="qhvideo" />
+
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.qihoo.video.DownloadedSerieActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:exported="false"
+            android:label="@string/empty_string"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActivityTheme" >
+            <intent-filter>
+                <data
+                    android:host="vapp.tomato.cn"
+                    android:path="/downloadedserie"
+                    android:scheme="qhvideo" />
+
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <!--
+        <activity
+            android:name="RecommendAppActivity"
+            android:exported="false"
+            android:label="apps"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActivityTheme" >
+            <intent-filter>
+                <data
+                    android:host="vapp.tomato.cn"
+                    android:path="/recommendapp"
+                    android:scheme="qhvideo" />
+
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        -->
+        <activity
+            android:name="com.qihoo.video.WebSearchDetailActivity"
+            android:exported="false"
+            android:label="@string/empty_string"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActivityTheme" >
+            <intent-filter>
+                <data
+                    android:host="vapp.tomato.cn"
+                    android:path="/websearchdetail"
+                    android:scheme="qhvideo" />
+
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.qihoo.video.MiniHandlerActivity"
+            android:exported="true"
+            android:label="@string/empty_string"
+            android:screenOrientation="portrait" >
+            <intent-filter>
+                <action android:name="com.qihoo.video.minihandleractivity" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.qihoo.video.MiniHandlerPlayActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:exported="true"
+            android:label="@string/empty_string"
+            android:screenOrientation="portrait"
+            android:theme="@style/transparentTheme" >
+            <intent-filter>
+                <action android:name="com.qihoo.video.minihandlerplayactivity" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.qihoo.video.QihooPlayerActivity"
+            android:configChanges="orientation|keyboardHidden|keyboard|screenSize"
+            android:exported="true"
+            android:label="@string/app_name_clone"
+            android:launchMode="singleTask"
+            android:screenOrientation="sensorLandscape" >
+            <intent-filter>
+                <data
+                    android:host="vapp.tomato.cn"
+                    android:path="/playvideo"
+                    android:scheme="qhvideo" />
+
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data android:mimeType="video/*" />
+            </intent-filter>
+        </activity>
+        <!--
+        <activity
+            android:name="com.qihoo.video.MoviePlayerActivity"
+            android:configChanges="orientation|keyboardHidden|keyboard|screenSize"
+            android:exported="true"
+            android:label="@string/app_name_clone"
+            android:launchMode="singleTask"
+            android:screenOrientation="sensorLandscape" >
+            <intent-filter>
+                <data
+                    android:host="vapp.tomato.cn"
+                    android:path="/movieplayvideo"
+                    android:scheme="qhvideo" />
+
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+      
+        <activity
+            android:name="com.qihoo.video.MovieDetailPlayerActivity"
+            android:configChanges="orientation|keyboardHidden|keyboard|screenSize"
+            android:exported="true"
+            android:label="@string/empty_string"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" >
+            <intent-filter>
+                <data
+                    android:host="vapp.tomato.cn"
+                    android:path="/moviedetailplayvideo"
+                    android:scheme="qhvideo" />
+
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+            -->
+        <activity
+            android:name="com.qihoo.video.LocalPlayerActivity"
+            android:configChanges="orientation|keyboardHidden|keyboard|screenSize"
+            android:exported="true"
+            android:label="LocalPlayer"
+            android:launchMode="singleTask"
+            android:screenOrientation="sensorLandscape" >
+        </activity>
+        <activity
+            android:name="com.qihoo.video.OfflinePlayerActivity"
+            android:configChanges="orientation|keyboardHidden|keyboard|screenSize"
+            android:exported="true"
+            android:label="LocalPlayer"
+            android:launchMode="singleTask"
+            android:screenOrientation="sensorLandscape" >
+        </activity>
+        <activity
+            android:name="com.qihoo.video.MiniOffLineActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:exported="true"
+            android:label="@string/empty_string"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActivityTheme" >
+            <intent-filter>
+                <action android:name="com.qihoo.video.miniofflineactivity" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.qihoo.video.MiniHistoryActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:exported="true"
+            android:label="@string/empty_string"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActivityTheme" >
+            <intent-filter>
+                <action android:name="com.qihoo.video.minihistoryactivity" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.letv.sdk.qihu.video.play.impl.BasePlayActivity"
+            android:configChanges="orientation|keyboardHidden|keyboard|screenSize"
+            android:exported="false"
+            android:screenOrientation="sensorLandscape"
+            android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen" />
+        <activity
+            android:name="com.letv.sdk.qihu.video.play.impl.LetvWebViewActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.letv.ads.view.LetvWebViewActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Black.NoTitleBar" />
+
+        
+
+        <!--
+        <activity
+            android:name="com.qihoo.video.YunpanActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:exported="false"
+            android:label="@string/empty_string"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActivityTheme" >
+            <intent-filter>
+                <data
+                    android:host="vapp.tomato.cn"
+                    android:path="/yunpan"
+                    android:scheme="qhvideo" />
+
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.qihoo.video.YunPanGroupFileListActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:exported="false"
+            android:label="@string/empty_string"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActivityTheme" >
+            <intent-filter>
+                <data
+                    android:host="vapp.tomato.cn"
+                    android:path="/yunpangroupfilelist"
+                    android:scheme="qhvideo" />
+
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.qihoo.video.YunpanAddGroupActivity"
+            android:exported="false"
+            android:label="@string/empty_string"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActivityTheme"
+            android:windowSoftInputMode="stateVisible" >
+            <intent-filter>
+                <data
+                    android:host="vapp.tomato.cn"
+                    android:path="/yunpanaddgroup"
+                    android:scheme="qhvideo" />
+
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.qihoo.video.YunpanLoginActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:exported="false"
+            android:label="@string/empty_string"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActivityTheme" >
+            <intent-filter>
+                <data
+                    android:host="vapp.tomato.cn"
+                    android:path="/yunpanlogin"
+                    android:scheme="qhvideo" />
+
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.qihoo.video.YunpanRegActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:exported="false"
+            android:label="@string/empty_string"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActivityTheme" >
+            <intent-filter>
+                <data
+                    android:host="vapp.tomato.cn"
+                    android:path="/yunpanreg"
+                    android:scheme="qhvideo" />
+
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.qihoo.video.YunpanWebViewActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:exported="false"
+            android:label="@string/empty_string"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActivityTheme" >
+            <intent-filter>
+                <data
+                    android:host="vapp.tomato.cn"
+                    android:path="/yunpanwebview"
+                    android:scheme="qhvideo" />
+
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.qihoo.video.YunpanFileActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:exported="false"
+            android:label="@string/empty_string"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActivityTheme" >
+            <intent-filter>
+                <data
+                    android:host="vapp.tomato.cn"
+                    android:path="/yunpanfile"
+                    android:scheme="qhvideo" />
+
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+          -->
+        <activity
+            android:name="com.qihoo.video.RankActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:label="@string/empty_string"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActivityTheme" >
+            <intent-filter>
+                <data
+                    android:host="vapp.tomato.cn"
+                    android:path="/rank"
+                    android:scheme="qhvideo" />
+
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.qihoo.video.game.GameActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:label="@string/empty_string"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActivityTheme" >
+            <intent-filter>
+                <data
+                    android:host="vapp.tomato.cn"
+                    android:path="/game"
+                    android:scheme="qhvideo" />
+
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.qihoo.video.account.AccountChangePasswordActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:label="@string/empty_string"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActivityTheme"
+            android:windowSoftInputMode="stateAlwaysHidden" >
+            <intent-filter>
+                <data
+                    android:host="vapp.tomato.cn"
+                    android:path="/changepassword"
+                    android:scheme="qhvideo" />
+
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.qihoo.video.account.AccountChangePhoneActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:label="@string/empty_string"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActivityTheme"
+            android:windowSoftInputMode="stateAlwaysHidden" >
+            <intent-filter>
+                <data
+                    android:host="vapp.tomato.cn"
+                    android:path="/changephone"
+                    android:scheme="qhvideo" />
+
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.qihoo.video.account.AccountAddActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:label="@string/empty_string"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActivityTheme"
+            android:windowSoftInputMode="stateAlwaysHidden" >
+            <intent-filter>
+                <data
+                    android:host="vapp.tomato.cn"
+                    android:path="/accountadd"
+                    android:scheme="qhvideo" />
+
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.qihoo.video.account.AccountLoginActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:label="@string/empty_string"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActivityTheme"
+            android:windowSoftInputMode="stateAlwaysHidden" >
+            <intent-filter>
+                <data
+                    android:host="vapp.tomato.cn"
+                    android:path="/login"
+                    android:scheme="qhvideo" />
+
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.qihoo.video.AlbumActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:label="@string/empty_string"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActivityTheme" >
+            <intent-filter>
+                <data
+                    android:host="vapp.tomato.cn"
+                    android:path="/album"
+                    android:scheme="qhvideo" />
+
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <!--
+        <activity
+            android:name="XianKanCinemaActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActivityTheme" >
+            <intent-filter>
+                <data
+                    android:host="vapp.tomato.cn"
+                    android:path="/xiankan"
+                    android:scheme="qhvideo" />
+
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+     
+        <activity
+            android:name="com.qihoo.video.MoviePrivateActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActivityTheme"
+            android:windowSoftInputMode="stateAlwaysHidden" >
+            <intent-filter>
+                <data
+                    android:host="vapp.tomato.cn"
+                    android:path="/movieprivate"
+                    android:scheme="qhvideo" />
+
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+           -->
+        <!--
+        <activity
+            android:name="SelectionsActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActivityTheme" >
+            <intent-filter>
+                <data
+                    android:host="vapp.tomato.cn"
+                    android:path="/movieselections"
+                    android:scheme="qhvideo" />
+
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        -->
+        <!-- 
+        <activity
+            android:name="com.qihoo.video.ad.nineshow.NineShowListActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActivityTheme" >
+            <intent-filter>
+                <data
+                    android:host="vapp.tomato.cn"
+                    android:path="/nineshowlist"
+                    android:scheme="qhvideo" />
+
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+ -->
+        <service android:name="com.sixnine.live.install.UpdateService" />
+
+        <activity
+            android:name="com.qihoo.video.PhotoPlayActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActivityTheme" >
+            <intent-filter>
+                <data
+                    android:host="vapp.tomato.cn"
+                    android:path="/photoplay"
+                    android:scheme="qhvideo" />
+
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.qihoo.video.LocalVideoListActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActivityTheme" >
+        </activity>
+
+        <service android:name="cn.u360.lightapp.download.DownloadService" />
+
+        <!-- webview -->
+        <activity
+            android:name="com.qihoo360.accounts.ui.a.WebViewActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:theme="@style/QihooAccountTheme" >
+        </activity>
+        <!-- 
+        <activity
+            android:name="com.alipay.sdk.app.H5PayActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.qihoo.video.XiankanShareActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActivityTheme" >
+        </activity>
+         -->
+        <activity
+            android:name="com.qihoo.video.account.AccountRegisterActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:label="@string/app_name_clone"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActivityTheme" >
+        </activity>
+        <activity
+            android:name="com.qihoo.video.account.AccountPswRecoveryActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:label="@string/app_name_clone"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActivityTheme" >
+        </activity>
+        <activity
+            android:name="com.qihoo.video.account.AccountSetPasswordActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:label="@string/app_name_clone"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActivityTheme" >
+        </activity>
+        <activity
+            android:name="com.qihoo.video.account.AccountRegisterFinishActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:label="@string/app_name_clone"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActivityTheme" >
+        </activity>
+        <activity
+            android:name="com.qihoo.video.account.AccountSetNewPwdActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:label="@string/app_name_clone"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActivityTheme" >
+        </activity>
+        <activity
+            android:name="com.qihoo.video.account.AccountMineActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:label="@string/app_name_clone"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActivityTheme" >
+        </activity>
+        <activity
+            android:name="com.qihoo.video.account.AccountChangeNameActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:label="@string/app_name_clone"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActivityTheme"
+            android:windowSoftInputMode="stateVisible" >
+        </activity>
+        <activity
+            android:name="com.qihoo.video.account.AccountChangeSexActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:label="@string/app_name_clone"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActivityTheme" >
+        </activity>
+        <activity
+            android:name="com.qihoo.video.account.AccountCropAvatarActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:label="@string/app_name_clone"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActivityTheme" >
+        </activity>
+        <activity
+            android:name="com.qihoo.video.test.TestActivity"
+            android:configChanges="orientation|keyboardHidden|keyboard|screenSize"
+            android:exported="false"
+            android:label="@string/empty_string"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActivityTheme" >
+        </activity>
+        <!-- 分享相关的activity 用于接收分享结果， 还有分享相关的key -->
+        <activity
+            android:name="com.qihoo.video.wxapi.WXEntryActivity"
+            android:exported="true"
+            android:label="@string/app_name_clone"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" >
+        </activity>
+        <activity
+            android:name="com.qihoo.video.wxapi.WXPayEntryActivity"
+            android:exported="true"
+            android:label="@string/app_name_clone"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" >
+        </activity>
+        <activity
+            android:name="com.sina.weibo.sdk.component.WeiboSdkBrowser"
+            android:configChanges="keyboardHidden|orientation"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" >
+        </activity>
+        <activity
+            android:name="com.qihoo.share.weibo.WeiboBaseActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:exported="true"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            android:windowSoftInputMode="adjustResize" >
+            <intent-filter>
+                <action android:name="com.sina.weibo.sdk.action.ACTION_SDK_REQ_ACTIVITY" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.tencent.connect.common.AssistActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+        <activity
+            android:name="com.tencent.tauth.AuthActivity"
+            android:launchMode="singleTask"
+            android:noHistory="true" >
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="tencent1104512506" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.mediav.ads.sdk.adcore.MvActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden" />
+
+        <service
+            android:name="com.mediav.ads.sdk.service.MvService"
+            android:enabled="true"
+            android:exported="false" >
+        </service>
+        <service
+            android:name="com.qq.e.comm.DownloadService"
+            android:exported="false" >
+        </service>
+
+        <activity
+            android:name="com.qq.e.ads.ADActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize" >
+        </activity>
+
+        <!-- 有道的配置 -->
+        <activity
+            android:name="com.youdao.sdk.common.YouDaoBrowser"
+            android:configChanges="keyboardHidden|orientation|screenSize" />
+        <!-- YouDaoNativeBrowser用于应用详情页，为可选配置 -->
+        <activity
+            android:name="com.youdao.sdk.common.YouDaoNativeBrowser"
+            android:configChanges="keyboardHidden|orientation|screenSize" >
+        </activity>
+        <!-- 应用下载服务，用于应用下载，为可选配置 -->
+        <service
+            android:name="com.youdao.sdk.common.AdAppService"
+            android:enabled="true" >
+        </service>
+
+        <!-- 应用安装广播接收器，用于应用下载，为可选配置 -->
+        <receiver
+            android:name="com.youdao.sdk.common.AdAppTrackerReceiver"
+            android:enabled="true"
+            android:exported="true" >
+            <intent-filter>
+                <action android:name="android.intent.action.PACKAGE_ADDED" />
+                <action android:name="android.intent.action.PACKAGE_REMOVED" />
+
+                <data android:scheme="package" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+            </intent-filter>
+        </receiver>
+
+        <meta-data
+            android:name="DR_APPKEY"
+            android:value="@string/app_key" />
+        <meta-data
+            android:name="QQ_AppKey"
+            android:value="1101086866" />
+        <meta-data
+            android:name="Weixin_AppKey"
+            android:value="wx434a7f08bddb1ac1" />
+        <meta-data
+            android:name="Weibo_AppKey"
+            android:value="131803968" />
+        <meta-data
+            android:name="LOG_SERVICE"
+            android:value="true" />
+        <meta-data
+            android:name="CHECK_UPDATE"
+            android:value="true" />
+        
+        <!-- meta-data
+            android:name="DEF_HOST"
+            android:value="ys.vapp.360.cn" />
+                
+        <meta-data
+            android:name="DEF_SCHEME"
+            android:value="qhvideo" /-->
+
+        
+        <!-- 影视大全的分身版本会有如下字段表明是分身 -->
+        <!-- <meta-data
+            android:name="CLONE_VERSION"
+            android:value="1" /> -->
+
+        <!-- 分身的SCHEME和HOST -->
+       <!-- <meta-data
+            android:name="CLONE_HOST"
+            android:value="ys.vapp.360.cn" />
+                
+        <meta-data
+            android:name="CLONE_SCHEME"
+            android:value="qhvideo" /> -->
+
+        <service
+            android:name="com.qihoo.appstore.updatelib.CheckUpdateService"
+            android:exported="false" />
+
+        <activity
+            android:name="com.qihoo.appstore.updatelib.CheckUpdateAcitivty"
+            android:exported="false"
+            android:theme="@android:style/Theme.Translucent" />
+<meta-data
+    android:name="CLONE_VERSION"
+    android:value="1" />
+
+<meta-data
+    android:name="CLONE_HOST"
+    android:value="vapp.tomato.cn" />
+
+<meta-data
+    android:name="CLONE_SCHEME"
+    android:value="qhvideo" />
+</application>
+
+
+</manifest>
